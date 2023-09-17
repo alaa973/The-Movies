@@ -1,0 +1,46 @@
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 450px;">
+      <div class="card-header">
+        <h2><b>Reset Password Request</b></h2>
+      </div>
+      <div class="card-body">
+        <form #form="ngForm" (ngSubmit) = 'onSubmit()'>
+            <div class="text-center">
+            <h4><b>Enter your email and a reset link will be sent to you</b></h4>
+            </div>
+            <div class="form-group mb-4">
+                
+                <label style="font-size: larger; margin-bottom: 1%;" for="email">Email</label>
+                <div class="p-inputgroup">
+                  <span class="p-inputgroup-addon">
+                      <i class="pi pi-envelope"></i>
+                  </span>
+                  <input pInputText #emailInput="ngModel" required [(ngModel)]="email" type="email" class="form-control" id="email" name="email" 
+                  (input)="errorMessage = ''" placeholder="email" pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}">
+              </div>
+                <div *ngIf="emailInput.touched && emailInput.invalid && emailInput.errors?.['required']" class="text-danger">
+                    This field is required.
+                </div>
+                <div *ngIf="emailInput.touched && emailInput.invalid && emailInput.errors?.['pattern']" class="text-danger">
+                    Please enter a valid email address.
+                  </div>
+            </div> 
+         
+          <div class="alert alert-danger" *ngIf="errorMessage" >{{ errorMessage }}</div>
+          <div class="alert alert-success" *ngIf="sent" >Check your email!</div>
+
+          <div class="text-center">
+            <span *ngIf="loading">
+              <i class="pi pi-spin pi-spinner"></i> Sending...
+            </span>
+            <button *ngIf="!loading" [disabled]="!form.valid" type="submit" class="btn btn-primary btn-block">Send</button>
+          </div>
+        </form>
+        <div class="mt-3 text-center">
+            <a routerLink="/login">Back to Login</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  

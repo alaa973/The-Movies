@@ -1,0 +1,48 @@
+<div class="container">
+<form #form = "ngForm" [formGroup]="movieForm" class = "m-4" (ngSubmit) = 'onSubmit()'>
+  <div class="mb-3">
+    <label class = "form-label label-required" for="title">Title</label>
+    <input class = "form-control" id="title" type="text" pInputText formControlName="title" (input)="clearAddErrorMessage()" />
+  </div>
+  <div  *ngIf="title?.errors?.['required'] && title?.touched" class="text-danger mb-3">
+    This field is required.
+</div>
+
+<div class="mb-3">
+  <label  class = "form-label label-required" for="description">Description</label>
+  <textarea pInputTextarea class = "form-control" id="description" formControlName="description"></textarea>
+</div>
+<div  *ngIf="description?.errors?.['required'] && description?.touched" class="text-danger mb-3">
+  This field is required.
+</div>
+
+  <div class="mb-3">
+    <label class = "form-label label-required" for="poster">Poster</label>
+    <input required class = "form-control" (change)="onPosterFileChange($event)" id="poster" type="file" accept=".png, .jpg"/>
+  </div>
+
+  <div class="mb-3">
+    <label class = "form-label label-required" for="releaseDate">Release Date</label>
+    <p-calendar  id="releaseDate" formControlName="releaseDate" ></p-calendar>
+  </div>
+  <div  *ngIf="releaseDate?.errors?.['required'] && releaseDate?.touched" class="text-danger mb-3">
+    This field is required.
+</div>
+  <div class="mb-3">
+    <label class = "form-label">Actors</label>
+    <p-chips separator="," placeholder="Hint: a, b, c" formControlName="actors" class="mr-sm-2"></p-chips>
+
+  </div>
+
+  <div class="mb-3">
+    <label class = "form-label">Reviews</label>
+    <p-chips separator="," placeholder="Hint: a, b, c" formControlName="reviews"></p-chips>
+  </div>
+
+  <!-- Add buttons to add/remove actors and reviews dynamically -->
+  <div class="alert alert-danger" *ngIf="addErrorMessage" >{{ addErrorMessage }}</div>
+  <div class="text-center">
+  <button style="font-size: larger;" class = "btn btn-primary btn-block" [disabled] = "!form.valid" type="submit">Add</button>
+  </div>
+</form>
+</div>
