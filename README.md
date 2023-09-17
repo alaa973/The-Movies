@@ -7,12 +7,12 @@ Users can securely create accounts, log in, and log out.
 2. Users can easily reset their password via their email.
 3. JWT authentication and password hashing are in place to protect user data.
 3. Movie Listings
-A comprehensive list of movies is displayed with essential details like title, description, poster, and release year.
+* A comprehensive list of movies is displayed with essential details like title, description, poster, and release year.
 4. Movie Details
-Each movie has its dedicated page with in-depth information, including descriptions, reviews, and cast details.
+* Each movie has its dedicated page with in-depth information, including descriptions, reviews, and cast details.
 # Project Overview
 ## Database Setup
-* The project begins with the design of a well-structured database schema to store movie and user data securely.
+The project begins with the design of a well-structured database schema to store movie and user data securely.
 ## Back-end Development
 * The server-side code (asp.net web api) is developed to handle HTTP requests efficiently.
 * CRUD (Create, Read, Update, Delete) operations are implemented for movies and user management.
@@ -21,7 +21,6 @@ Each movie has its dedicated page with in-depth information, including descripti
 * Advanced features like password hashing and session management enhance security.
 ## Front-end Development
 The user interface is designed using angular to be visually appealing, and user-friendly.
-## Users can reset their passwords securely in case of a forgotten password.
 ## Role-Based Authorization
-Role-based authorization ensures that different users have appropriate access levels and permissions, for example: An admin can add or edit a movie but a viewr can't.
+Role-based authorization ensures that different users have appropriate access levels and permissions, for example: An admin can add or edit a movie but a viewer can't.
   
