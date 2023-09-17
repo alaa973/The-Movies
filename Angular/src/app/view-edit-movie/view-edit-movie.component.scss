@@ -1,0 +1,32 @@
+.auto-resize-textarea {
+    height: 100px; 
+  }
+  label{
+    display: block;
+  }
+input{
+    font-size: large;
+    display: inline;
+}
+textarea{
+    font-size: medium;
+}
+
+.castLabel{
+  margin-bottom: 0;
+    text-align: center;
+    font-size: 130%;
+}
+div{
+  color: black;
+  font-size: 103%;
+  line-height: 1.5;
+}
+.review{
+  line-height: 1.4;
+  font-size: smaller;
+  text-indent: 3%;
+}
+.card, .cast{
+  background-color: #f1ebeb;  
+}

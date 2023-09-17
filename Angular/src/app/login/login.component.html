@@ -1,0 +1,49 @@
+
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 400px;">
+      <div class="card-header">
+        <i class="pi pi-user" style="font-size: 1.4rem; margin-right:1.5%;"></i>
+        <h2 style="display: inline;"><b>Login</b></h2>
+      </div>
+      <div class="card-body">
+        <form #form="ngForm" (ngSubmit) = 'onSubmit()'>
+          <div class="form-group mb-4">
+            <label for="username">Username</label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                  <i class="pi pi-user"></i>
+              </span>
+              <input pInputText #usernameInput = "ngModel" required type="text" class="form-control" id="username" name = "username" placeholder="Enter your username" [(ngModel)]="user.userName" (input)="clearErrorMessage()">
+          </div>
+            <div *ngIf="usernameInput.touched && usernameInput.invalid && usernameInput.errors?.['required']" class="text-danger">
+              This field is required.
+          </div>
+          </div>
+          <div class="form-group mb-4">
+            <label for="password">Password</label>
+            <div class="p-inputgroup">
+              <span class="p-inputgroup-addon">
+                  <i class="pi pi-lock"></i>
+              </span>
+              <input pInputText #passwordInput = "ngModel" required [type]="visible? 'text' : 'password'" class="form-control" id="password" name = "password" placeholder="Enter your password" [(ngModel)] = "user.hashPassword" (input)="clearErrorMessage()">
+              <button (click) = "togglePass()" type="button" pButton [icon]="visible ? 'pi pi-eye-slash' : 'pi pi-eye'" styleClass="p-button-warn"></button>
+          </div>
+            <div *ngIf="passwordInput.touched && passwordInput.invalid && passwordInput.errors?.['required']" class="text-danger">
+              This field is required.
+          </div>
+          </div>
+          <div class="alert alert-danger" *ngIf="errorMessage" >{{ errorMessage }}</div>
+          <div class="text-center">
+            <button style="cursor: pointer;" [disabled]="!form.valid" type="submit" class="btn btn-primary btn-block">Login</button>
+          </div>
+        </form>
+        <div class="mt-3 text-center">
+            Don't have an account? <a routerLink="/register">Create an account</a>
+        </div>
+        <div class="mt-3 text-center">
+            Forgot password? <a routerLink="/request/reset" >Reset</a>
+      </div>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,10 @@
+.form-label{
+    display: block;
+}
+p-calendar{
+    display: block;
+}
+:host::ng-deep .label-required:after {
+    content: " *";
+    color: red;
+  }

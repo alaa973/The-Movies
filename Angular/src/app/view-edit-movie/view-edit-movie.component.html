@@ -1,0 +1,96 @@
+<div class="container">
+    
+  <form #form = "ngForm" [formGroup]="movieForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+          <input *ngIf="isEditable" class="form-control" style="font-weight: bold; font-size: 200%; text-align: center;" type="text" (input)="clearErrorMessage()" formControlName="title" [readonly]="!isEditable" />
+          <div *ngIf="!isEditable" class="mb-4" style="font-weight: bold; font-size: 200%; text-align: center;">{{title?.value}}</div>
+      </div>
+      <div  *ngIf="title?.errors?.['required'] && title?.touched" class="text-danger mb-3">
+        This field is required.
+    </div>
+    
+      <img class="card-img-top mb-3" [src]="selectedImageSrc" alt="{{ movie.title }}">
+      <div class="mb-3" *ngIf="isEditable">
+          <input
+            type="file"
+            id="image"
+            name="image"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+            class="form-control"
+          />
+      </div>
+
+  <div class="mb-3" *ngIf="isEditable">
+    <textarea class="auto-resize-textarea form-control" #textArea formControlName="description" [readonly]="!isEditable"></textarea>
+  </div>
+  <div class="mb-3" *ngIf="!isEditable">
+    {{description?.value}}
+  </div>
+  <div  *ngIf="description?.errors?.['required'] && description?.touched" class="text-danger mb-3">
+    This field is required.
+  </div>
+  <label class = "form-label" for="releaseDate"><b>Release Date</b></label>
+  <div class="mb-3" *ngIf="isEditable">
+      <p-calendar  
+      id="releaseDate" formControlName="releaseDate" [readonlyInput]="!isEditable" [showOnFocus]="isEditable" ></p-calendar>
+    </div>  
+    <div *ngIf="!isEditable" class="mb-3">
+      {{releaseDate?.value | date:'mediumDate' }} 
+    </div>
+  <div  *ngIf="releaseDate?.errors?.['required'] && releaseDate?.touched" class="text-danger mb-3">
+    This field is required.
+</div>
+   <div formArrayName="cast" *ngIf="getActors.controls.length || isEditable">
+    <hr>
+      <label class = "form-label castLabel" for="cast"><b>Cast</b></label>
+      <div class ="inline mb-3" *ngFor="let actorControl of getActors.controls ; let i = index">
+          <div   [formGroupName]="i">
+            <div class="row align-items-center">
+              <div class="col-md-11" *ngIf="isEditable">
+                <input class="form-control" style="display: inline-block;" formControlName="firstName" [readOnly]="!isEditable" />
+              </div>
+              <div class="col-md-11" *ngIf="!isEditable" style="display: inline; justify-content: space-between;">
+                {{actorControl.value.firstName}}
+              </div>
+              <div class="col-md-1" *ngIf="isEditable">
+                <p-button icon="pi pi-trash" (click) = "removeActor(i, actorControl.value.id)" styleClass="p-button-danger p-button-rounded"></p-button>
+              </div>
+            </div>
+            
+          </div>
+        </div>    
+        <div class="text-center m-2 mb-5" *ngIf="isEditable">
+        <p-button class="btn-sm" icon="pi pi-plus" styleClass="p-button-success p-button-rounded" (click)="addActor()" ></p-button>
+        </div>
+
+  </div>  
+  <div formArrayName="reviews" *ngIf="getReviews.controls.length || isEditable || !isAdmin">
+    <hr>
+      <label class = "form-label castLabel mb-2" for="reviews"><b>Reviews</b></label>
+      <div class ="inline mb-3" *ngFor="let reviewsControl of getReviews.controls ; let i = index">
+          <div   [formGroupName]="i">
+            <div class="row align-items-center">
+              <div class="col-md-11" *ngIf="isEditable || !isAdmin && isNewReview[i]">
+              <textarea class="form-control" formControlName="description"></textarea>
+              </div>
+              <div class="review cast" *ngIf="!isEditable && !isNewReview[i]">
+                {{reviewsControl.value.description}}
+                </div>
+              <div class="col-md-1" *ngIf="isEditable || !isAdmin && isNewReview[i]">
+                <p-button icon="pi pi-trash" (click) = "removeReview(i, reviewsControl.value.id)" styleClass="p-button-danger p-button-rounded"> </p-button>
+              </div>
+            </div>
+          </div>
+        </div>    
+        <div class="text-center m-2 mb-3" *ngIf="isEditable  || !isAdmin">
+          <p-button class="btn-sm" icon="pi pi-plus" styleClass="p-button-success p-button-rounded" (click)="addReview()"></p-button>
+        </div>
+  </div> 
+  <div class="alert alert-danger" *ngIf="updateErrorMessage" >{{ updateErrorMessage }}</div>
+
+  <div class="text-center m-3 mt-5" *ngIf="isEditable || (getReviews.length > movie.reviews!.length)">
+    <p-button icon="pi pi-check" [disabled] = "!form.valid || areAnyReviewsEmpty() || areAnyCastMembersEmpty()"  label="Save changes" (click) = "onSubmit()"></p-button>
+  </div>
+</form>
+</div>

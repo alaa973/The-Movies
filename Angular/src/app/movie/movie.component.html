@@ -1,0 +1,25 @@
+<div class="mb-4 mt-4" style="text-align: center;">
+  <span class="p-input-icon-left">
+    <i class="pi pi-search"></i>
+  <input pInputText placeholder="search" type="search" [(ngModel)]="searchValue" (input)="performSearch(searchValue)">
+  </span>
+</div>
+<div class="container mt-5">  
+    <div class="row">
+      <div class="col-md-4" *ngFor="let movie of movies; let i = index">
+        <div class="card mb-4 position-relative" (click)="show(movie.id!,false, admin)" >
+          <img [src]="movie.posterPath" class="card-img-top" alt="{{ movie.title }}">
+          <div class="card-body">
+            <h3 class="card-title"><b> {{ movie.title }}</b></h3>
+            <p class="card-text mb-5" style="font-size: 110%;">{{ movie.description }}</p>
+            <span class="card-text"><b>Release Date: {{ movie.releaseDate | date:'mediumDate' }}</b></span>
+          </div>
+          <div class = "position-absolute bottom-0 end-0 m-2">
+            <p-button *ngIf="admin" class = "btn-sm m-2" icon="pi pi-pencil" styleClass="p-button-success" (click)="editMovie($event,movie.id!)"></p-button>
+            <p-button *ngIf="admin" class="btn-sm " icon="pi pi-trash" styleClass="p-button-danger" (click)="deleteMovie($event,movie.id!, movie.title, i)"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

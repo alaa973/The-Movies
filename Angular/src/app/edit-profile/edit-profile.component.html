@@ -1,0 +1,61 @@
+<app-ribbon-bar></app-ribbon-bar>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card" style="width: 50%;">
+      <div class="card-header">
+        <span>
+        <i class="pi pi-user" style="font-size: 1.8rem"></i>
+        <h2 style="display: inline;"><b>My Profile</b></h2>
+        </span>
+      </div>
+      <div class="card-body">
+        <form #form = "ngForm" [formGroup]="userForm">
+            <div class="mb-3">
+                <label class = "form-label" for="email">Email</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-envelope"></i>
+                    </span>
+                    <input (input)="editErrorMessage = ''" pInputText class="form-control" type="text" formControlName="email" [readonly]="!isEditable"/>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class = "form-label" for="username">Username</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-user"></i>
+                    </span>
+                    <input (input)="editErrorMessage = ''" pInputText class="form-control" type="text" formControlName="username" [readonly]="!isEditable"/>
+                </div>
+            </div>
+
+            <div class="mb-3" *ngIf="editPressed">
+                <label *ngIf="buttonCondition!='verified'" class = "form-label" for="password">Please enter your password</label>
+                <label *ngIf="buttonCondition=='verified'" class = "form-label" for="password">Password</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">
+                        <i class="pi pi-lock"></i>
+                    </span> 
+                    <input  [type]="visible? 'text' : 'password'" pInputText class="form-control"  formControlName="password" (input)="errorMessage = ''"/>
+                    <button (click) = "togglePass()" type="button" pButton [icon]="visible ? 'pi pi-eye-slash' : 'pi pi-eye'" styleClass="p-button-warn"></button>
+                </div>
+           
+            </div>
+            <ng-container [ngSwitch]="buttonCondition">
+            <div class="text-center" *ngSwitchCase="'init'">
+                <p-button label="Edit" icon="pi pi-pencil" styleClass="p-button-success" (click)="editPressed = true; buttonCondition = 'check'"></p-button>
+            </div>
+            <div class="alert alert-danger m-3" *ngIf="errorMessage" >{{ errorMessage }}</div>
+            <div class="text-center" *ngSwitchCase="'check'">
+                <p-button [disabled]="!password?.value.length" label="Verify Password" icon="pi pi-check-circle" styleClass="p-button-success" (click)="verifyPass()"></p-button>
+            </div>
+            <div *ngIf="editErrorMessage"class="text-danger mb-4" >
+                {{editErrorMessage}}
+            </div>
+            <div class="text-center" *ngSwitchCase="'verified'">
+                <p-button label="Save changes" (click) = "saveChanges()" icon="pi pi-check" styleClass="p-button-success" ></p-button>
+            </div>
+            </ng-container>
+        </form>
+      </div>
+    </div>
+</div>
