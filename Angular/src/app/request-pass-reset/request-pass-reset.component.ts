@@ -21,7 +21,8 @@ export class RequestPassResetComponent {
       this.sent = true;
       console.log(data);
     },
-    error:(err:any) => {     
+    error:(err:any) => {  
+      this.loading = false;   
       this.errorMessage = err.error.message;
       console.log("error" + err.error.message);
     },
